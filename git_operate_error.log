@@ -1,0 +1,15 @@
+xsw@ubuntu:~/svr_base_event$ git push -u origin master
+Username for 'https://github.com': jin-long
+Password for 'https://jin-long@github.com': 
+To https://github.com/jin-long/svr_base_event.git
+ ! [rejected]        master -> master (fetch first)
+    error: failed to push some refs to 'https://github.com/jin-long/svr_base_event.git'
+    hint: Updates were rejected because the remote contains work that you do
+    hint: not have locally. This is usually caused by another repository pushing
+    hint: to the same ref. You may want to first integrate the remote changes
+    hint: (e.g., 'git pull ...') before pushing again.
+    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+xsw@ubuntu:~/svr_base_event$ 
+xsw@ubuntu:~/svr_base_event$ 
+xsw@ubuntu:~/svr_base_event$ 
+xsw@ubuntu:~/svr_base_event$ git pull --rebase origin master
