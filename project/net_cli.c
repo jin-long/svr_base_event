@@ -69,14 +69,15 @@ void run(char * buf, int len)
     int ret = -1;
     int cnt = 600;
     int add = 0;
-    char *ip = "0.0.0.0";
+    char *ip = "192.168.13.122";
     ssize_t sret = 0;
+    int port = 15000;
 
     fd = new_socket_linux_block(); 
 
     bzero(&addr, sizeof(addr));
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(15000);
+    addr.sin_port = htons(port);
     addr.sin_addr.s_addr = inet_addr(ip);
     
     ret = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
@@ -92,7 +93,7 @@ void run(char * buf, int len)
     {
         sret = send(fd, buf, len, 0);   
 
-        usleep(60*1000*1000);
+        usleep(120*1000*1000);
     }
 
 close_fd:
