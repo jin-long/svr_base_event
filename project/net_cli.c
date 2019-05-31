@@ -1,3 +1,12 @@
+/******************************************************************************
+
+    descripte:  for test cloud server client
+        author:         xianshiwei
+        date:           2019/04/08
+
+******************************************************************************/
+
+
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -69,17 +78,33 @@ void run(char * buf, int len)
     int ret = -1;
     int cnt = 600;
     int add = 0;
-    char *ip = "192.168.13.122";
+    char *sip = "192.168.1.253";
+    
+    //char *sip = "127.0.0.1";
     ssize_t sret = 0;
+    //int port = 10007;
     int port = 15000;
-
-    fd = new_socket_linux_block(); 
 
     bzero(&addr, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = inet_addr(ip);
+    addr.sin_addr.s_addr = inet_addr(sip);
     
+    fd = new_socket_linux_block(); 
+    
+    struct sockaddr_in caddr;
+    char *cip = "127.0.0.1";
+/*    
+    bzero(&caddr, sizeof(caddr));
+    caddr.sin_family = AF_INET;
+    caddr.sin_port = htons(0);
+    caddr.sin_addr.s_addr = inet_addr(cip);
+    if (bind(fd, (struct sockaddr *)&caddr, sizeof(caddr)))
+    {
+        perror("bind()");
+        goto close_fd;
+    }    
+*/
     ret = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
     if (0 != ret)
     {
@@ -89,20 +114,22 @@ void run(char * buf, int len)
 
     printf("send buf :%s \n", buf);
 
-    while(add++ < cnt)
+    //while(add++ < cnt)
     {
         sret = send(fd, buf, len, 0);   
 
-        usleep(120*1000*1000);
+        //usleep(120*1000*1000);
+        usleep(1000*1000);
     }
-
+    
+    return;
 close_fd:
     close(fd);
 }    
 
 int main(int argc, char * argv[])
 {
-    char buf[256];
+    char buf[128];
     
     if (argc != 2)
     {
@@ -112,8 +139,10 @@ int main(int argc, char * argv[])
 
     snprintf(buf, sizeof(buf)-1,  "run cli id : %s \n", argv[1]);
     
-    run(buf, sizeof(buf));
+    for (int i=0; i<10; i++)
+    {    
+        run(buf, sizeof(buf));
+    }
 
     return 0;
-}    
-
+}
